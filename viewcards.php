@@ -67,8 +67,8 @@ foreach($cards as $i=>$card) {
 <tr>
  <td><?=$card['side0']?></td>
  <td><?=$card['side1']?></td>
- <td class="numeric"><?=!empty($card['correct'])?$card['correct']:0?></td>
- <td class="numeric"><?=!empty($card['incorrect'])?$card['incorrect']:0?></td>
+ <td class="numeric"><?=$card['correct']?></td>
+ <td class="numeric"><?=$card['incorrect']?></td>
  <td class="numeric"><?=$card['correct']+$card['incorrect']?></td>
  <td class="numeric"><?= ($card['correct']+$card['incorrect'] > 0) ? sprintf('%.1f%%',
     $card['correct']/($card['correct']+$card['incorrect'])* 100) : '--'?></td>

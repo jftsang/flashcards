@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
  /* Sanitise the newly-written cardlist. Fill in missing numerical values as
   * zero, and use htmlspecialchars() on the strings. */
  $cards = eatcsv($cardlist_filename);
- foreach($cards as $card) {
+ foreach($cards as &$card) {
   $card['side0'] = htmlspecialchars($card['side0']);
   $card['side1'] = htmlspecialchars($card['side1']);
   if (empty($card['correct'])) $card['correct']=0;
