@@ -1,0 +1,13 @@
+side0,side1,correct,incorrect,lasttested
+C major,C minor
+G major,G minor
+D major,D minor
+A major,A minor
+E major,E minor
+B major,B minor
+F sharp major,F sharp minor
+D flat major,C sharp minor
+A flat major,G sharp minor
+E flat major,D sharp minor
+B flat major,B flat minor
+F major,F minor
