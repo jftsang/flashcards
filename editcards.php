@@ -13,7 +13,22 @@ if(!$isloggedin) {
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
  $file = fopen($cardlist_filename,'w') or $msg.="Couldn't open file $cardlist_filename.";
  fputs($file,$_REQUEST['cardlist']) or $msg.="Couldn't write to file $cardlist_filename. ";
+ fclose($file);
  if(!isset($msg)) $msg = "Written to file $cardlist_filename. ";
+
+ /* Sanitise the newly-written cardlist. Fill in missing numerical values as
+  * zero, and use htmlspecialchars() on the strings. */
+ $cards = eatcsv($cardlist_filename);
+ foreach($cards as $card) {
+  $card['side0'] = htmlspecialchars($card['side0']);
+  $card['side1'] = htmlspecialchars($card['side1']);
+  if (empty($card['correct'])) $card['correct']=0;
+  if (empty($card['incorrect'])) $card['incorrect']=0;
+  if (empty($card['lasttested'])) $card['lasttested']=0;
+ }
+ /* Rewrite the cardlist using the sanitised table. */
+ $file = fopen($cardlist_filename,'w');
+ writecsv($file,$cards);
 } 
 
 ?>

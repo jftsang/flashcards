@@ -17,15 +17,6 @@ if (!$isloggedin) {
 
 $cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filename.");
 
-/* Sanitise the cardlist by filling in missing values as zero. */
-foreach($cards as $card) {
- $card['side0'] = htmlspecialchars($card['side0']); 
- $card['side1'] = htmlspecialchars($card['side1']); 
- if (empty($card['correct'])) $card['correct']=0;
- if (empty($card['incorrect'])) $card['incorrect']=0;
- if (empty($card['lasttested'])) $card['lasttested']=0;
-}
-
 $oldcardid = $_REQUEST['cardid'];
 $oldside   = $_REQUEST['side'];
 /* If the user gave a response (positive or negative), record it. */
@@ -42,7 +33,7 @@ switch ($_REQUEST['action']) {
 ?>
 <br/>
 <?php
-/* Update the cardlist file, having sanitised the cards and updated it. */
+/* Update the cardlist file, having updated it. */
 $file = fopen($cardlist_filename,'w');
 writecsv($file,$cards);
 
