@@ -17,8 +17,18 @@ if (!$isloggedin) {
 
 $cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filename.");
 
+/* Sanitise the cardlist by filling in missing values as zero. */
+foreach($cards as $card) {
+ $card['side0'] = htmlspecialchars($card['side0']); 
+ $card['side1'] = htmlspecialchars($card['side1']); 
+ if (empty($card['correct'])) $card['correct']=0;
+ if (empty($card['incorrect'])) $card['incorrect']=0;
+ if (empty($card['lasttested'])) $card['lasttested']=0;
+}
+
 $oldcardid = $_REQUEST['cardid'];
 $oldside   = $_REQUEST['side'];
+/* If the user gave a response (positive or negative), record it. */
 switch ($_REQUEST['action']) {
  case 'I know this':
   $cards[$oldcardid]['correct']++;
@@ -29,12 +39,16 @@ switch ($_REQUEST['action']) {
   $cards[$oldcardid]['lasttested'] = time();
   break;
 }
-?><br/><?php
-/* Update the cardlist file */
+?>
+<br/>
+<?php
+/* Update the cardlist file, having sanitised the cards and updated it. */
 $file = fopen($cardlist_filename,'w');
 writecsv($file,$cards);
 
-/* Choose the next thing to display */
+/* Choose the next thing to display. If the user did not give a response but
+ * asked for the card to be refreshed (for whatever reason) or flipped, show
+ * the same card but possibly flipped. Otherwise, show a new card. */
 
 switch ($_REQUEST['action']) {
  case 'refresh':
@@ -94,7 +108,7 @@ $card = $cards[$cardid];
 if (isset($card['correct']) && isset($card['incorrect']) && $card['correct'] + $card['incorrect'] > 0) {
 ?>
     <p>You have got this card right <?=
-sprintf('%.1f',$card['correct']/($card['correct']+$card['incorrect'])*100)?>% of the time. (<?=$card['correct']?> out of <?=$card['correct'] + $card['incorrect']?>)</p>
+sprintf('%.1f',$card['correct']/($card['correct']+$card['incorrect'])*100)?>% of the time. (<?=!empty($card['correct'])?$card['correct']:0?> out of <?=$card['correct'] + $card['incorrect']?>)</p>
 <?php
 }
 if (!empty($card['lasttested'])) {
