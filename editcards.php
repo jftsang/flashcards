@@ -2,6 +2,8 @@
 ini_set('default_charset', 'UTF-8');
 header('Content-Type: text/html;charset=utf-8');
 set_include_path('include/');
+require_once('eatcsv.php');
+require_once('writecsv.php');
 
 session_start();
 require_once('isloggedin.php');
