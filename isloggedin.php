@@ -3,7 +3,7 @@
 set_include_path('include/');
 require_once('eatcsv.php');
 
-$passwordfile = eatcsv('passwords');
+$passwordfile = eatcsv('users.csv');
 $passwords = array();
 foreach($passwordfile as $user) {
  $passwords[$user['username']] = $user['password'];
@@ -29,11 +29,12 @@ if(   isset($_SESSION['flashcards_username'])
   }
   
   system('touch cardlists/'.$username.'/'.$username);
-  if(!isset($_SESSION['flashcards_cardlist'])) {
+  if(isset($_SESSION['flashcards_cardlist'])) {
    $cardlist = $_SESSION['flashcards_cardlist'];
   } else {
    $cardlist = $username;
   }
+  $cardlist_filename = 'cardlists/'.$username.'/'.$cardlist;
  }
 }
 

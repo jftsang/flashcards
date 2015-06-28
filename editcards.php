@@ -11,9 +11,9 @@ if(!$isloggedin) {
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
- $file = fopen('cardlists/'.$username,'w') or $msg.="Couldn't open file cardlists/$username. ";
- fputs($file,$_REQUEST['cardlist']) or $msg.="Couldn't write to file cardlists/$username. ";
- if(!isset($msg)) $msg = "Written to file cardlists/$username. ";
+ $file = fopen($cardlist_filename,'w') or $msg.="Couldn't open file $cardlist_filename.";
+ fputs($file,$_REQUEST['cardlist']) or $msg.="Couldn't write to file $cardlist_filename. ";
+ if(!isset($msg)) $msg = "Written to file $cardlist_filename. ";
 } 
 
 ?>
@@ -27,21 +27,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <h1>Your current cardlist</h1>
 <pre>
-<?= file_get_contents('cardlists/'.$username) ?>
+<?= file_get_contents($cardlist_filename) ?>
 </pre>
 
 <h2>Edit cardlist</h2>
 
 <p><?=$msg?></p>
 
-<p><strong>Warning!</strong> Make sure you know what you're doing...</p>
+<p><strong>Warning!</strong> Make sure you know what you're doing! Your cardlist is stored internally as a CSV file.</p>
 
 <p><a href="index.php">Back to flashcards</a></p>
 
 <form action="editcards.php" method="post">
 
 <textarea name="cardlist" rows="24" cols="80">
-<?=isset($_REQUEST['cardlist']) ? $_REQUEST['cardlist'] : file_get_contents('cardlists/'.$username) ?>
+<?=isset($_REQUEST['cardlist']) ? $_REQUEST['cardlist'] : file_get_contents($cardlist_filename) ?>
 </textarea>
 <br/>
 <input type="submit"/>

@@ -15,8 +15,7 @@ if (!$isloggedin) {
  die('You are not logged in. Please go and <a href="login.php">log in</a>.'); 
 }
 
-$cardlist_filename = 'cardlists/'.$username;
-$cards = eatcsv($cardlist_filename);
+$cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filename.");
 
 $oldcardid = $_REQUEST['cardid'];
 $oldside   = $_REQUEST['side'];
@@ -31,6 +30,7 @@ switch ($_REQUEST['action']) {
   break;
 }
 ?><br/><?php
+/* Update the cardlist file */
 $file = fopen($cardlist_filename,'w');
 writecsv($file,$cards);
 
@@ -90,12 +90,13 @@ $card = $cards[$cardid];
 <br/>
 (Be honest!)
 <br/><br/>
-<input type="submit" name="action" value="newcard"/>
+<input type="submit" name="action" value="new card"/>
 <input type="submit" name="action" value="flip"/>
 <input type="submit" name="action" value="refresh"/>
 </form>
 
-Using card list <?=$username?>.<br/>
+Logged in as <?=$username?>.<br/>
+Using card list <?=$cardlist?>.<br/>
 <a href="editcards.php">edit cardlist</a> | 
 <a href="about.php">about</a> |
 <a href="logout.php">logout</a>

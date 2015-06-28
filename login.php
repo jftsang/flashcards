@@ -1,14 +1,18 @@
 <?php
 session_start();
 
-$_SESSION['flashcards_username'] = $_REQUEST['username'];
-$_SESSION['flashcards_password'] = $_REQUEST['password'];
+if(isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
+ $_SESSION['flashcards_username'] = $_REQUEST['username'];
+ $_SESSION['flashcards_password'] = $_REQUEST['password'];
+}
 
 require_once('isloggedin.php');
 
 if ($isloggedin) {
 ?>
-<p>Welcome, <?=$username?>! You are logged in. <a href="index.php">Flashcards!</a></p>
+<p>Welcome, <?=$username?>! You are logged in.</p>
+<p><a href="index.php">Flashcards!</a></p>
+<p><a href="logout.php">Logout</a></p>
 <?php
 } else {
 ?>
