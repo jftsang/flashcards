@@ -53,7 +53,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 <form action="editcards.php" method="post">
 
 <textarea name="cardlist" rows="24" cols="80">
-<?=isset($_REQUEST['cardlist']) ? $_REQUEST['cardlist'] : file_get_contents($cardlist_filename) ?>
+<?php 
+ // echo isset($_REQUEST['cardlist']) ? $_REQUEST['cardlist'] : file_get_contents($cardlist_filename);
+ echo file_get_contents($cardlist_filename);
+?>
 </textarea>
 <br/>
 <input type="submit"/>
