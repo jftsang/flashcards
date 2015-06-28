@@ -1,5 +1,8 @@
 The files /users.csv needs to be readable to the web server, and ideally to
 nobody else.
 
+You probably also want to stop the web server from serving /users.csv to
+anybody. So, forbid this in .htaccess.
+
 The directory /cardlists/ and all of its contents need to be readable and
-writable for the web server.
+writable for the web server. 
