@@ -72,7 +72,7 @@ $card = $cards[$cardid];
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Jonny's flashcards</title>
+<title>Flashcards tool</title>
 </head>
 <body>
 <div style="text-align: center; margin-top:10%">
@@ -84,19 +84,33 @@ $card = $cards[$cardid];
 <input type="hidden" name="cardid" value="<?=$cardid?>"/>
 <input type="hidden" name="side" value="<?=$side?>"/>
 
-<br/>
+<p>
 <input type="submit" name="action" value="I know this"/>
 <input type="submit" name="action" value="I don't know this"/>
 <br/>
 (Be honest!)
-<br/><br/>
+</p>
+<?php
+if (isset($card['correct']) && isset($card['incorrect']) && $card['correct'] + $card['incorrect'] > 0) {
+?>
+    <p>You have got this card right <?=
+sprintf('%.1f',$card['correct']/($card['correct']+$card['incorrect'])*100)?>% of the time. (<?=$card['correct']?> out of <?=$card['correct'] + $card['incorrect']?>)</p>
+<?php
+}
+if (!empty($card['lasttested'])) {
+?>
+    <p>This card was last tested on <?=date('d M Y',$card['lasttested'])?>.</p>
+<?php }?>
+<p>
 <input type="submit" name="action" value="new card"/>
 <input type="submit" name="action" value="flip"/>
 <input type="submit" name="action" value="refresh"/>
+</p>
 </form>
 
-Logged in as <?=$username?>.<br/>
-Using card list <?=$cardlist?>.<br/>
+Logged in as <tt><?=$username?></tt>.<br/>
+Using card list <tt><?=$cardlist?></tt>.<br/>
+<a href="viewcards.php">view cardlist</a> |
 <a href="editcards.php">edit cardlist</a> | 
 <a href="about.php">about</a> |
 <a href="logout.php">logout</a>

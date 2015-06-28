@@ -25,16 +25,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-<h1>Your current cardlist</h1>
-<pre>
-<?= file_get_contents($cardlist_filename) ?>
-</pre>
-
-<h2>Edit cardlist</h2>
+<h1>Editing cardlist <tt><?=$cardlist?></tt> of user <tt><?=$username?></tt></h1>
 
 <p><?=$msg?></p>
 
-<p><strong>Warning!</strong> Make sure you know what you're doing! Your cardlist is stored internally as a CSV file.</p>
+<p><a href="viewcards.php">View your current cardlist</a></p>
 
 <p><a href="index.php">Back to flashcards</a></p>
 
