@@ -12,7 +12,12 @@ session_start();
  * /cardlists/ or not. */
 require_once('isloggedin.php');
 if (!$isloggedin) {
- die('You are not logged in. Please go and <a href="login.php">log in</a>.'); 
+?>
+<h1>Flashcards</h1>
+<p>You are not logged in. Please go and <a href="login.php">log in</a>, or <a
+href="register.php">register</a>.</p>
+<?php
+   die(); 
 }
 
 $cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filename.");
