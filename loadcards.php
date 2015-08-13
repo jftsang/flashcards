@@ -16,12 +16,15 @@ $cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filenam
  * in a while. */
 
 $weights = array_map(
- function($card) {
-  $propright = ($card['correct'] + $card['incorrect'] > 0) ?
-   $card['correct'] / ($card['correct'] + $card['incorrect']) : 0.5;
-   $weight = (time() - $card['lasttested'])/3600 + 1/($propright+1) - 1/2;
-  return $weight;
- }
+    function($card) {
+        /* Work out the proportion of times we have got the card right. If it
+         * has never been tested before, then arbitrarily say that the
+         * proportion is 0.5. */
+        $propright = ($card['correct'] + $card['incorrect'] > 0) ?
+            $card['correct'] / ($card['correct'] + $card['incorrect']) : 0.5;
+        $weight = (time() - $card['lasttested'])/3600 + 1/($propright+1) - 1/2;
+        return $weight;
+    }
 , $cards); //array_map
 
 

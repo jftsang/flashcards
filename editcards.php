@@ -52,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <form action="editcards.php" method="post">
 
-<textarea name="cardlist" rows="24" cols="80">
+<textarea name="cardlist" rows="24" cols="80" style="font-family: monospace">
 <?php 
  // echo isset($_REQUEST['cardlist']) ? $_REQUEST['cardlist'] : file_get_contents($cardlist_filename);
  echo file_get_contents($cardlist_filename);
