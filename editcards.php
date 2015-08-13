@@ -12,6 +12,8 @@ if(!$isloggedin) {
  die('You are not logged in. Please go to <a href="login.php">login.php</a>.');
 }
 
+require_once('loadcards.php');
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
  $file = fopen($cardlist_filename,'w') or $msg.="Couldn't open file $cardlist_filename.";
  fputs($file,$_REQUEST['cardlist']) or $msg.="Couldn't write to file $cardlist_filename. ";
