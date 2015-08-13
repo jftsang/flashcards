@@ -16,7 +16,9 @@ if ($isloggedin) {
 <?php
 } else {
 ?>
-Hello. You are not logged in.
+<p>You are not logged in.</p>
+
+<p><a href="register.php">Register</a> to use flashcards.</p>
 
 <form action="login.php" method="post">
 Username <input type="text" name="username"/><br/>
