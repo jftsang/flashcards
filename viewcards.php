@@ -10,15 +10,7 @@ if(!$isloggedin) {
  die('You are not logged in. Please go to <a href="login.php">login.php</a>.');
 }
 
-$cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filename.");
-$weights = array_map(
- function($card) {
-  $propright = ($card['correct'] + $card['incorrect'] > 0) ?
-   $card['correct'] / ($card['correct'] + $card['incorrect']) : 0.5;
-   $weight = (time() - $card['lasttested'])/3600 + 1/($propright+1) - 1/2;
-  return $weight;
- }
-, $cards); //array_map
+require_once('loadcards.php');
 
 ?>
 <html>
@@ -49,6 +41,8 @@ td.numeric {
 
 <body>
 <h1>Cardlist <tt><?=$cardlist?></tt> of user <tt><?=$username?></tt></h1>
+
+<p>The <em>Weight</em> column indicates how likely the tool is to show you this card again. More weighting is given to cards which haven't come up in a while, and to cards which you have not got right very often.</p>
 
 <table>
 <tr>

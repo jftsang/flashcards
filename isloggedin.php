@@ -1,4 +1,6 @@
 <?php
+/* isloggedin.php - Checks if the user is logged in. If so, prepares the
+* variables $username, $cardlist and $cardlist_filename. */
 
 set_include_path('include/');
 require_once('eatcsv.php');
@@ -34,7 +36,6 @@ if(   isset($_SESSION['flashcards_username'])
   } else {
    $cardlist = $username;
   }
-  $cardlist_filename = 'cardlists/'.$username.'/'.$cardlist;
  }
 }
 

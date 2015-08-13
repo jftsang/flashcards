@@ -20,6 +20,8 @@ href="register.php">register</a>.</p>
    die(); 
 }
 
+require_once('loadcards.php');
+
 $cards = eatcsv($cardlist_filename) or die("Couldn't open file $cardlist_filename.");
 
 $oldcardid = $_REQUEST['cardid'];
@@ -57,17 +59,7 @@ switch ($_REQUEST['action']) {
   break;
  case 'newcard':
  default:
-  /* Weight the cards, and choose a random card. Cards are given more weight if
-   * the user has got them wrong very often, and if the card hasn't come up
-   * in a while. */
-  $weights = array_map(
-   function($card) {
-    $propright = ($card['correct'] + $card['incorrect'] > 0) ?
-     $card['correct'] / ($card['correct'] + $card['incorrect']) : 0.5;
-     $weight = (time() - $card['lasttested'])/3600 + 1/($propright+1) - 1/2;
-    return $weight;
-   }
-  , $cards); //array_map
+  /* Draw cards until we get a new one. */
   while (true) {
    $cardid = array_weightedrandom($cards,$weights);
    if ($cardid != $oldcardid) break;
@@ -98,7 +90,6 @@ $card = $cards[$cardid];
 <input type="submit" name="action" value="I know this"/>
 <input type="submit" name="action" value="I don't know this"/>
 <br/>
-(Be honest!)
 </p>
 <?php
 if (isset($card['correct']) && isset($card['incorrect']) && $card['correct'] + $card['incorrect'] > 0) {
